@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  build:
+	commands:
+	-echo "this is my 2st specfile"
+	-zip -r deployment_packages.zip s3.py
+   post_build:
+	commands:
+	-echo "Deployment to lambda"
+	-aws lambda update-function-code --function-name Hello_world --zip-file fileb://deployment_package.zip
+  artifacts:
+	type: zip
+paths:
+	- '*'
